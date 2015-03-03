@@ -145,13 +145,13 @@ NSInteger wallPostsBatch = 7;
 }
 
 - (IBAction)actionShowUserGroups:(UIButton *)sender {
-//    RJGroupsViewController *vc = [[RJGroupsViewController alloc] initWithStyle:UITableViewStylePlain];
-//    vc.userID = self.userID;
-//    [self.navigationController pushViewController:vc animated:YES];
-    UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"Authorization needed" message:@"You have to be authorized to see user's groups" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *action = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
-    [ac addAction:action];
-    [self presentViewController:ac animated:YES completion:nil];
+    RJGroupsViewController *vc = [[RJGroupsViewController alloc] initWithStyle:UITableViewStylePlain];
+    vc.userID = self.userID;
+    [self.navigationController pushViewController:vc animated:YES];
+//    UIAlertController *ac = [UIAlertController alertControllerWithTitle:@"Authorization needed" message:@"You have to be authorized to see user's groups" preferredStyle:UIAlertControllerStyleAlert];
+//    UIAlertAction *action = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
+//    [ac addAction:action];
+//    [self presentViewController:ac animated:YES completion:nil];
 }
 
 - (IBAction)actionShowUserFriends:(UIButton *)sender {

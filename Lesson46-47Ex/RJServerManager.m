@@ -8,9 +8,13 @@
 
 #import "RJServerManager.h"
 #import "AFHTTPRequestOperationManager.h"
+#import "RJUser.h"
+#import "RJLoginViewController.h"
+#import "RJAccessToken.h"
 
 @interface RJServerManager ()
 @property (strong, nonatomic) AFHTTPRequestOperationManager *requestOperationManager;
+@property (strong, nonatomic) RJAccessToken *accessToken;
 @end
 
 @implementation RJServerManager
@@ -33,6 +37,67 @@
         self.requestOperationManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:url];
     }
     return self;
+}
+
+- (void) authorizeUser:(void(^)(RJUser *user)) completion {
+    
+    RJLoginViewController* vc = [[RJLoginViewController alloc] initWithCompletionBlock:^(RJAccessToken *token) {
+        self.accessToken = token;
+        if (token) {
+            [self getUser:self.accessToken.userID
+                onSuccess:^(RJUser *user) {
+                    if (completion) {
+                        completion(user);
+                    }
+                }
+                onFailure:^(NSError *error, NSInteger statusCode) {
+                    if (completion) {
+                        completion(nil);
+                    }
+                }];
+        } else if (completion) {
+            completion(nil);
+        }
+    }];
+    
+    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    UIViewController* mainVC = [[[[UIApplication sharedApplication] windows] firstObject] rootViewController];
+    [mainVC presentViewController:nav
+                         animated:YES
+                       completion:nil];
+}
+
+- (void) getUser:(NSString*) userID
+       onSuccess:(void(^)(RJUser* user)) success
+       onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
+    
+    NSDictionary* params =
+    [NSDictionary dictionaryWithObjectsAndKeys:
+     userID,        @"user_ids",
+     @"photo_50",   @"fields",
+     @"nom",        @"name_case", nil];
+    
+    [self.requestOperationManager
+     GET:@"users.get"
+     parameters:params
+     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+         NSArray* dictsArray = [responseObject objectForKey:@"response"];
+         if ([dictsArray count] > 0) {
+             RJUser* user = [[RJUser alloc] initWithDictionary:[dictsArray firstObject]];
+             if (success) {
+                 success(user);
+             }
+         } else {
+             if (failure) {
+                 failure(nil, operation.response.statusCode);
+             }
+         }
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         NSLog(@"Error: %@", error);
+         if (failure) {
+             failure(error, operation.response.statusCode);
+         }
+     }];
 }
 
 - (void) getFriendsForId:(NSInteger)friendId
@@ -146,8 +211,8 @@
                                  @"extended": @1,
                                  @"count": @(count),
                                  @"offset": @(offset),
-//                                 @"fields": @[@"photo_100", @"online"],
-                                 @"v": (@5.8)};
+                                 @"access_token": self.accessToken.token,
+                                 @"v": (@5.28)};
     
     [self.requestOperationManager GET:@"groups.get?"
                            parameters:parameters

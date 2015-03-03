@@ -8,9 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
+@class RJUser;
+
 @interface RJServerManager : NSObject
+@property (strong, nonatomic, readonly) RJUser *currentUser;
 
 + (RJServerManager *)sharedManager;
+
+- (void)authorizeUser:(void(^)(RJUser *user)) completion;
+
+- (void) getUser:(NSString*) userID
+       onSuccess:(void(^)(RJUser* user)) success
+       onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure;
 
 - (void) getFriendsForId:(NSInteger)friendId
                withCount:(NSInteger)count

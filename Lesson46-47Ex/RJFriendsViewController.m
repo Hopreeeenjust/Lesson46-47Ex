@@ -16,6 +16,7 @@
 
 @interface RJFriendsViewController () <UITableViewDataSource>
 @property (strong, nonatomic) NSArray *friendsArray;
+@property (assign, nonatomic) BOOL firstTimeAppear;
 @end
 
 NSInteger friendsBatch = 20;
@@ -26,6 +27,8 @@ NSInteger friendsBatch = 20;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.firstTimeAppear = YES;
     if (!self.userID) {
         self.userID = 6054746;
     } else {
@@ -45,6 +48,18 @@ NSInteger friendsBatch = 20;
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    if (self.firstTimeAppear) {
+        self.firstTimeAppear = NO;
+        [[RJServerManager sharedManager] authorizeUser:^(RJUser *user) {
+            NSLog(@"AUTHORIZED!");
+            NSLog(@"%@ %@", user.firstName, user.lastName);
+        }];
+    }
 }
 
 
