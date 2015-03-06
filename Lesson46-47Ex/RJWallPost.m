@@ -9,10 +9,11 @@
 #import "RJWallPost.h"
 
 @implementation RJWallPost
+
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
     if (self) {
-        self.userID = [[dictionary valueForKey:@"owner_id"] integerValue];
+        self.userID = [[dictionary valueForKey:@"from_id"] integerValue];
         self.repostSourceID = [[[dictionary valueForKeyPath:@"copy_history.owner_id"] firstObject] integerValue];
         self.postDate = [dictionary valueForKey:@"date"];
         self.repostDate = [[dictionary valueForKeyPath:@"copy_history.date"] firstObject];

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E00DA6F51AA9A9F5003B2F90 /* RJChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E00DA6F41AA9A9F5003B2F90 /* RJChatViewController.m */; };
+		E00DA6F81AA9ABEB003B2F90 /* RJMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E00DA6F71AA9ABEB003B2F90 /* RJMessageCell.m */; };
 		E00F4A161AA3928700AD3763 /* RJPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = E00F4A151AA3928700AD3763 /* RJPhoto.m */; };
 		E01CE04E1A9FC3B900A9F5E1 /* online@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = E01CE04D1A9FC3B900A9F5E1 /* online@2X.png */; };
 		E01CE0511A9FC4EC00A9F5E1 /* RJFriendListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E01CE0501A9FC4EC00A9F5E1 /* RJFriendListCell.m */; };
@@ -22,7 +24,7 @@
 		E0753B991A9DD3CA00EE79B5 /* RJServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E0753B981A9DD3CA00EE79B5 /* RJServerManager.m */; };
 		E0753BD41A9DE18A00EE79B5 /* RJUser.m in Sources */ = {isa = PBXBuildFile; fileRef = E0753BD31A9DE18A00EE79B5 /* RJUser.m */; };
 		E0753BDB1A9E058600EE79B5 /* UIScrollView+InfiniteScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = E0753BDA1A9E058600EE79B5 /* UIScrollView+InfiniteScroll.m */; };
-		E08548C91A9E29C20040DDEB /* RJFriendProfileController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08548C81A9E29C20040DDEB /* RJFriendProfileController.m */; };
+		E08548C91A9E29C20040DDEB /* RJUserProfileController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08548C81A9E29C20040DDEB /* RJUserProfileController.m */; };
 		E096C7661AA5C9EB00AAC0E0 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E096C7421AA5C9EB00AAC0E0 /* AFHTTPRequestOperation.m */; };
 		E096C7671AA5C9EB00AAC0E0 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E096C7441AA5C9EB00AAC0E0 /* AFHTTPRequestOperationManager.m */; };
 		E096C7681AA5C9EB00AAC0E0 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E096C7461AA5C9EB00AAC0E0 /* AFHTTPSessionManager.m */; };
@@ -42,12 +44,19 @@
 		E096C7761AA5C9EB00AAC0E0 /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = E096C7651AA5C9EB00AAC0E0 /* UIWebView+AFNetworking.m */; };
 		E096C77A1AA5D2BA00AAC0E0 /* RJAccessToken.m in Sources */ = {isa = PBXBuildFile; fileRef = E096C7791AA5D2BA00AAC0E0 /* RJAccessToken.m */; };
 		E096C77D1AA5D30B00AAC0E0 /* RJLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E096C77C1AA5D30B00AAC0E0 /* RJLoginViewController.m */; };
+		E096C77F1AA6369D00AAC0E0 /* PostButton@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = E096C77E1AA6369D00AAC0E0 /* PostButton@2X.png */; };
+		E096C7821AA63E0300AAC0E0 /* RJFirstCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E096C7811AA63E0300AAC0E0 /* RJFirstCell.m */; };
+		E0D135201AA6F6EA001E3F79 /* RJWritePostController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D1351F1AA6F6EA001E3F79 /* RJWritePostController.m */; };
+		E0D135231AA74674001E3F79 /* RJDialogsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D135221AA74674001E3F79 /* RJDialogsCell.m */; };
+		E0D135261AA765A8001E3F79 /* RJDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D135251AA765A8001E3F79 /* RJDialog.m */; };
+		E0D135291AA76B76001E3F79 /* RJDialogsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D135281AA76B76001E3F79 /* RJDialogsViewController.m */; };
 		E0D14C1A1AA318FD001F8000 /* repost@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D14C191AA318FD001F8000 /* repost@2X.png */; };
 		E0EC8DB41AA093B800C6FD26 /* RJFollowersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EC8DB31AA093B800C6FD26 /* RJFollowersViewController.m */; };
 		E0EC8DB71AA0A01600C6FD26 /* RJGroupsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EC8DB61AA0A01600C6FD26 /* RJGroupsViewController.m */; };
 		E0EC8DBA1AA0AEAA00C6FD26 /* RJGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EC8DB91AA0AEAA00C6FD26 /* RJGroup.m */; };
 		E0EC8DC11AA0D2C500C6FD26 /* RJWallPost.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EC8DC01AA0D2C500C6FD26 /* RJWallPost.m */; };
 		E0EC8DC71AA0D5BA00C6FD26 /* RJWallPostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EC8DC61AA0D5BA00C6FD26 /* RJWallPostCell.m */; };
+		E0F85DE41AAA31FF000FA4D1 /* RJMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F85DE31AAA31FF000FA4D1 /* RJMessage.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +70,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E00DA6F31AA9A9F5003B2F90 /* RJChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RJChatViewController.h; sourceTree = "<group>"; };
+		E00DA6F41AA9A9F5003B2F90 /* RJChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RJChatViewController.m; sourceTree = "<group>"; };
+		E00DA6F61AA9ABEB003B2F90 /* RJMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RJMessageCell.h; sourceTree = "<group>"; };
+		E00DA6F71AA9ABEB003B2F90 /* RJMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RJMessageCell.m; sourceTree = "<group>"; };
 		E00F4A141AA3928700AD3763 /* RJPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RJPhoto.h; sourceTree = "<group>"; };
 		E00F4A151AA3928700AD3763 /* RJPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RJPhoto.m; sourceTree = "<group>"; };
 		E01CE04D1A9FC3B900A9F5E1 /* online@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "online@2X.png"; sourceTree = "<group>"; };
@@ -87,8 +100,8 @@
 		E0753BD31A9DE18A00EE79B5 /* RJUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RJUser.m; sourceTree = "<group>"; };
 		E0753BD91A9E058600EE79B5 /* UIScrollView+InfiniteScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIScrollView+InfiniteScroll.h"; path = "../../../../Downloads/UIScrollView-InfiniteScroll-master/Classes/UIScrollView+InfiniteScroll.h"; sourceTree = "<group>"; };
 		E0753BDA1A9E058600EE79B5 /* UIScrollView+InfiniteScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIScrollView+InfiniteScroll.m"; path = "../../../../Downloads/UIScrollView-InfiniteScroll-master/Classes/UIScrollView+InfiniteScroll.m"; sourceTree = "<group>"; };
-		E08548C71A9E29C20040DDEB /* RJFriendProfileController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RJFriendProfileController.h; sourceTree = "<group>"; };
-		E08548C81A9E29C20040DDEB /* RJFriendProfileController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RJFriendProfileController.m; sourceTree = "<group>"; };
+		E08548C71A9E29C20040DDEB /* RJUserProfileController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RJUserProfileController.h; sourceTree = "<group>"; };
+		E08548C81A9E29C20040DDEB /* RJUserProfileController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RJUserProfileController.m; sourceTree = "<group>"; };
 		E096C7411AA5C9EB00AAC0E0 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		E096C7421AA5C9EB00AAC0E0 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
 		E096C7431AA5C9EB00AAC0E0 /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
@@ -129,6 +142,17 @@
 		E096C7791AA5D2BA00AAC0E0 /* RJAccessToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RJAccessToken.m; sourceTree = "<group>"; };
 		E096C77B1AA5D30B00AAC0E0 /* RJLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RJLoginViewController.h; sourceTree = "<group>"; };
 		E096C77C1AA5D30B00AAC0E0 /* RJLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RJLoginViewController.m; sourceTree = "<group>"; };
+		E096C77E1AA6369D00AAC0E0 /* PostButton@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PostButton@2X.png"; sourceTree = "<group>"; };
+		E096C7801AA63E0300AAC0E0 /* RJFirstCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RJFirstCell.h; sourceTree = "<group>"; };
+		E096C7811AA63E0300AAC0E0 /* RJFirstCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RJFirstCell.m; sourceTree = "<group>"; };
+		E0D1351E1AA6F6EA001E3F79 /* RJWritePostController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RJWritePostController.h; sourceTree = "<group>"; };
+		E0D1351F1AA6F6EA001E3F79 /* RJWritePostController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RJWritePostController.m; sourceTree = "<group>"; };
+		E0D135211AA74674001E3F79 /* RJDialogsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RJDialogsCell.h; sourceTree = "<group>"; };
+		E0D135221AA74674001E3F79 /* RJDialogsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RJDialogsCell.m; sourceTree = "<group>"; };
+		E0D135241AA765A8001E3F79 /* RJDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RJDialog.h; sourceTree = "<group>"; };
+		E0D135251AA765A8001E3F79 /* RJDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RJDialog.m; sourceTree = "<group>"; };
+		E0D135271AA76B76001E3F79 /* RJDialogsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RJDialogsViewController.h; sourceTree = "<group>"; };
+		E0D135281AA76B76001E3F79 /* RJDialogsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RJDialogsViewController.m; sourceTree = "<group>"; };
 		E0D14C191AA318FD001F8000 /* repost@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "repost@2X.png"; sourceTree = "<group>"; };
 		E0EC8DB21AA093B800C6FD26 /* RJFollowersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RJFollowersViewController.h; sourceTree = "<group>"; };
 		E0EC8DB31AA093B800C6FD26 /* RJFollowersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RJFollowersViewController.m; sourceTree = "<group>"; };
@@ -140,6 +164,8 @@
 		E0EC8DC01AA0D2C500C6FD26 /* RJWallPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RJWallPost.m; sourceTree = "<group>"; };
 		E0EC8DC51AA0D5BA00C6FD26 /* RJWallPostCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RJWallPostCell.h; sourceTree = "<group>"; };
 		E0EC8DC61AA0D5BA00C6FD26 /* RJWallPostCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RJWallPostCell.m; sourceTree = "<group>"; };
+		E0F85DE21AAA31FF000FA4D1 /* RJMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RJMessage.h; sourceTree = "<group>"; };
+		E0F85DE31AAA31FF000FA4D1 /* RJMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RJMessage.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +189,7 @@
 		E01CE04C1A9FC3B900A9F5E1 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				E096C77E1AA6369D00AAC0E0 /* PostButton@2X.png */,
 				E0D14C191AA318FD001F8000 /* repost@2X.png */,
 				E01CE0561A9FD0A900A9F5E1 /* online_mobile_small@2X.png */,
 				E01CE0541A9FCEF900A9F5E1 /* online_mobile@2X.png */,
@@ -328,6 +355,10 @@
 				E0EC8DC01AA0D2C500C6FD26 /* RJWallPost.m */,
 				E00F4A141AA3928700AD3763 /* RJPhoto.h */,
 				E00F4A151AA3928700AD3763 /* RJPhoto.m */,
+				E0D135241AA765A8001E3F79 /* RJDialog.h */,
+				E0D135251AA765A8001E3F79 /* RJDialog.m */,
+				E0F85DE21AAA31FF000FA4D1 /* RJMessage.h */,
+				E0F85DE31AAA31FF000FA4D1 /* RJMessage.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -339,6 +370,12 @@
 				E01CE0501A9FC4EC00A9F5E1 /* RJFriendListCell.m */,
 				E0EC8DC51AA0D5BA00C6FD26 /* RJWallPostCell.h */,
 				E0EC8DC61AA0D5BA00C6FD26 /* RJWallPostCell.m */,
+				E096C7801AA63E0300AAC0E0 /* RJFirstCell.h */,
+				E096C7811AA63E0300AAC0E0 /* RJFirstCell.m */,
+				E0D135211AA74674001E3F79 /* RJDialogsCell.h */,
+				E0D135221AA74674001E3F79 /* RJDialogsCell.m */,
+				E00DA6F61AA9ABEB003B2F90 /* RJMessageCell.h */,
+				E00DA6F71AA9ABEB003B2F90 /* RJMessageCell.m */,
 			);
 			name = CustomCells;
 			sourceTree = "<group>";
@@ -361,10 +398,16 @@
 				E0EC8DB31AA093B800C6FD26 /* RJFollowersViewController.m */,
 				E0EC8DB51AA0A01600C6FD26 /* RJGroupsViewController.h */,
 				E0EC8DB61AA0A01600C6FD26 /* RJGroupsViewController.m */,
-				E08548C71A9E29C20040DDEB /* RJFriendProfileController.h */,
-				E08548C81A9E29C20040DDEB /* RJFriendProfileController.m */,
+				E08548C71A9E29C20040DDEB /* RJUserProfileController.h */,
+				E08548C81A9E29C20040DDEB /* RJUserProfileController.m */,
 				E096C77B1AA5D30B00AAC0E0 /* RJLoginViewController.h */,
 				E096C77C1AA5D30B00AAC0E0 /* RJLoginViewController.m */,
+				E0D1351E1AA6F6EA001E3F79 /* RJWritePostController.h */,
+				E0D1351F1AA6F6EA001E3F79 /* RJWritePostController.m */,
+				E0D135271AA76B76001E3F79 /* RJDialogsViewController.h */,
+				E0D135281AA76B76001E3F79 /* RJDialogsViewController.m */,
+				E00DA6F31AA9A9F5003B2F90 /* RJChatViewController.h */,
+				E00DA6F41AA9A9F5003B2F90 /* RJChatViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -449,6 +492,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E096C77F1AA6369D00AAC0E0 /* PostButton@2X.png in Resources */,
 				E0753B7D1A9DD35800EE79B5 /* Main.storyboard in Resources */,
 				E0753B821A9DD35800EE79B5 /* LaunchScreen.xib in Resources */,
 				E01CE0551A9FCEF900A9F5E1 /* online_mobile@2X.png in Resources */,
@@ -476,33 +520,41 @@
 				E0753B7A1A9DD35800EE79B5 /* RJFriendsViewController.m in Sources */,
 				E096C7701AA5C9EB00AAC0E0 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				E096C7751AA5C9EB00AAC0E0 /* UIRefreshControl+AFNetworking.m in Sources */,
+				E00DA6F81AA9ABEB003B2F90 /* RJMessageCell.m in Sources */,
 				E096C7721AA5C9EB00AAC0E0 /* UIButton+AFNetworking.m in Sources */,
 				E096C7711AA5C9EB00AAC0E0 /* UIAlertView+AFNetworking.m in Sources */,
 				E0EC8DB41AA093B800C6FD26 /* RJFollowersViewController.m in Sources */,
 				E096C77D1AA5D30B00AAC0E0 /* RJLoginViewController.m in Sources */,
 				E0753B771A9DD35800EE79B5 /* AppDelegate.m in Sources */,
-				E08548C91A9E29C20040DDEB /* RJFriendProfileController.m in Sources */,
+				E08548C91A9E29C20040DDEB /* RJUserProfileController.m in Sources */,
 				E096C76D1AA5C9EB00AAC0E0 /* AFURLResponseSerialization.m in Sources */,
 				E096C76B1AA5C9EB00AAC0E0 /* AFURLConnectionOperation.m in Sources */,
 				E0EC8DB71AA0A01600C6FD26 /* RJGroupsViewController.m in Sources */,
 				E0EC8DC71AA0D5BA00C6FD26 /* RJWallPostCell.m in Sources */,
+				E00DA6F51AA9A9F5003B2F90 /* RJChatViewController.m in Sources */,
 				E096C7741AA5C9EB00AAC0E0 /* UIProgressView+AFNetworking.m in Sources */,
 				E096C7671AA5C9EB00AAC0E0 /* AFHTTPRequestOperationManager.m in Sources */,
 				E0753BD41A9DE18A00EE79B5 /* RJUser.m in Sources */,
+				E096C7821AA63E0300AAC0E0 /* RJFirstCell.m in Sources */,
 				E096C76A1AA5C9EB00AAC0E0 /* AFSecurityPolicy.m in Sources */,
 				E01CE0511A9FC4EC00A9F5E1 /* RJFriendListCell.m in Sources */,
+				E0D135261AA765A8001E3F79 /* RJDialog.m in Sources */,
 				E0753B991A9DD3CA00EE79B5 /* RJServerManager.m in Sources */,
 				E096C76C1AA5C9EB00AAC0E0 /* AFURLRequestSerialization.m in Sources */,
 				E096C7691AA5C9EB00AAC0E0 /* AFNetworkReachabilityManager.m in Sources */,
 				E00F4A161AA3928700AD3763 /* RJPhoto.m in Sources */,
+				E0D135201AA6F6EA001E3F79 /* RJWritePostController.m in Sources */,
 				E096C7731AA5C9EB00AAC0E0 /* UIImageView+AFNetworking.m in Sources */,
 				E0753BDB1A9E058600EE79B5 /* UIScrollView+InfiniteScroll.m in Sources */,
+				E0D135291AA76B76001E3F79 /* RJDialogsViewController.m in Sources */,
 				E0EC8DBA1AA0AEAA00C6FD26 /* RJGroup.m in Sources */,
 				E096C7661AA5C9EB00AAC0E0 /* AFHTTPRequestOperation.m in Sources */,
 				E096C77A1AA5D2BA00AAC0E0 /* RJAccessToken.m in Sources */,
+				E0D135231AA74674001E3F79 /* RJDialogsCell.m in Sources */,
 				E0EC8DC11AA0D2C500C6FD26 /* RJWallPost.m in Sources */,
 				E096C76F1AA5C9EB00AAC0E0 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				E096C7681AA5C9EB00AAC0E0 /* AFHTTPSessionManager.m in Sources */,
+				E0F85DE41AAA31FF000FA4D1 /* RJMessage.m in Sources */,
 				E096C7761AA5C9EB00AAC0E0 /* UIWebView+AFNetworking.m in Sources */,
 				E0753B741A9DD35800EE79B5 /* main.m in Sources */,
 				E096C76E1AA5C9EB00AAC0E0 /* AFURLSessionManager.m in Sources */,

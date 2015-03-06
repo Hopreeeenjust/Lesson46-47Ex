@@ -11,7 +11,7 @@
 #import "RJUser.h"
 #import "UIImageView+AFNetworking.h"
 #import "UIScrollView+InfiniteScroll.h"
-#import "RJFriendProfileController.h"
+#import "RJUserProfileController.h"
 #import "RJFriendListCell.h"
 
 @interface RJFriendsViewController () <UITableViewDataSource>
@@ -28,13 +28,9 @@ NSInteger friendsBatch = 20;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.firstTimeAppear = YES;
-    if (!self.userID) {
-        self.userID = 6054746;
-    } else {
-        self.navigationItem.title = @"Friends";
-    }
     self.friendsArray = [NSArray new];
+    
+    self.tableView.backgroundColor = [UIColor whiteColor];
     
     [self getFriendsFromServer];
     
@@ -50,23 +46,17 @@ NSInteger friendsBatch = 20;
     [super didReceiveMemoryWarning];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    if (self.firstTimeAppear) {
-        self.firstTimeAppear = NO;
-        [[RJServerManager sharedManager] authorizeUser:^(RJUser *user) {
-            NSLog(@"AUTHORIZED!");
-            NSLog(@"%@ %@", user.firstName, user.lastName);
-        }];
-    }
-}
-
-
 #pragma mark - API
 
 - (void)getFriendsFromServer {
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    UIActivityIndicatorView *view = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    view.center = CGPointMake(CGRectGetMidX(self.tableView.bounds), 20);
+    [self.tableView addSubview:view];
+    [view startAnimating];
+    
     [[RJServerManager sharedManager] getFriendsForId:self.userID withCount:friendsBatch andOffset:[self.friendsArray count] onSuccess:^(NSArray *friends) {
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         [[self mutableArrayValueForKey:@"friendsArray"] addObjectsFromArray:friends];
         NSMutableArray *newPaths = [NSMutableArray array];
         for (int i = (int)[self.friendsArray count] - (int)[friends count]; i < [self.friendsArray count]; i++) {
@@ -75,6 +65,7 @@ NSInteger friendsBatch = 20;
         [self.tableView beginUpdates];
         [self.tableView insertRowsAtIndexPaths:newPaths withRowAnimation:UITableViewRowAnimationTop];
         [self.tableView endUpdates];
+        [view stopAnimating];
     } onFailure:^(NSError *error, NSInteger statusCode) {
         NSLog(@"Error = %@, code = %ld", [error localizedDescription], statusCode);
     }];
@@ -126,9 +117,8 @@ NSInteger friendsBatch = 20;
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSDictionary *friendInfo = [self.friendsArray objectAtIndex:indexPath.row];
     RJUser *friend = [[RJUser alloc] initWithDictionary:friendInfo];
-    RJFriendProfileController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"RJFriendProfileController"];
-    vc.userID = friend.userID;
-    vc.title = friend.firstName;
+    RJUserProfileController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"RJFriendProfileController"];
+    vc.user = friend;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

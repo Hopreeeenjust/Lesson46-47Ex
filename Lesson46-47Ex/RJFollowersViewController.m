@@ -11,7 +11,7 @@
 #import "RJUser.h"
 #import "UIImageView+AFNetworking.h"
 #import "UIScrollView+InfiniteScroll.h"
-#import "RJFriendProfileController.h"
+#import "RJUserProfileController.h"
 #import "RJFriendListCell.h"
 
 @interface RJFollowersViewController () <UITableViewDataSource>
@@ -113,9 +113,8 @@ NSInteger followersBatch = 20;
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSDictionary *followerInfo = [self.followersArray objectAtIndex:indexPath.row];
     RJUser *follower = [[RJUser alloc] initWithDictionary:followerInfo];
-    RJFriendProfileController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"RJFriendProfileController"];
-    vc.userID = follower.userID;
-    vc.title = follower.firstName;
+    RJUserProfileController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"RJFriendProfileController"];
+    vc.user = follower;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

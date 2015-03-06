@@ -15,10 +15,11 @@
     if (self) {
         self.name = [dictionary valueForKey:@"name"];
         self.imageUrl = [dictionary valueForKey:@"photo_100"];
-        self.originalImageUrl = [dictionary valueForKey:@"photo_max"];
+        self.originalImageUrl = [dictionary valueForKey:@"photo_200"];
         self.city = [dictionary valueForKeyPath:@"city.title"];
         self.country = [dictionary valueForKeyPath:@"country.title"];
         self.groupID = [[dictionary valueForKey:@"id"] integerValue];
+        self.membersCount = [[dictionary valueForKey:@"members_count"] integerValue];
     }
     return self;
 }

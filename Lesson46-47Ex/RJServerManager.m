@@ -44,9 +44,11 @@
     RJLoginViewController* vc = [[RJLoginViewController alloc] initWithCompletionBlock:^(RJAccessToken *token) {
         self.accessToken = token;
         if (token) {
-            [self getUser:self.accessToken.userID
-                onSuccess:^(RJUser *user) {
+            [self getUser:@[self.accessToken.userID]
+                onSuccess:^(NSArray *users) {
                     if (completion) {
+                        RJUser *user = [users firstObject];
+                        self.loggedUser = user;
                         completion(user);
                     }
                 }
@@ -67,15 +69,15 @@
                        completion:nil];
 }
 
-- (void) getUser:(NSString*) userID
-       onSuccess:(void(^)(RJUser* user)) success
-       onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
+- (void)getUser:(NSArray *)userIDs
+      onSuccess:(void(^)(NSArray *users)) success
+      onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
     
-    NSDictionary* params =
-    [NSDictionary dictionaryWithObjectsAndKeys:
-     userID,        @"user_ids",
-     @"photo_50",   @"fields",
-     @"nom",        @"name_case", nil];
+    NSDictionary* params = @{
+                             @"user_ids": userIDs,
+                             @"fields": @"photo_100, online, online_mobile",
+                             @"name_case": @"nom",
+                             @"v": (@5.28)};
     
     [self.requestOperationManager
      GET:@"users.get"
@@ -83,9 +85,13 @@
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSArray* dictsArray = [responseObject objectForKey:@"response"];
          if ([dictsArray count] > 0) {
-             RJUser* user = [[RJUser alloc] initWithDictionary:[dictsArray firstObject]];
+             NSMutableArray *users = [NSMutableArray array];
+             for (NSDictionary *userDict in dictsArray) {
+                 RJUser* user = [[RJUser alloc] initWithDictionary:userDict];
+                 [users addObject:user];
+             }
              if (success) {
-                 success(user);
+                 success(users);
              }
          } else {
              if (failure) {
@@ -100,11 +106,11 @@
      }];
 }
 
-- (void) getFriendsForId:(NSInteger)friendId
-                   withCount:(NSInteger)count
-                   andOffset:(NSInteger)offset
-                   onSuccess:(void(^)(NSArray *friends))success
-                   onFailure:(void(^)(NSError *error, NSInteger statusCode))failure {
+- (void)getFriendsForId:(NSInteger)friendId
+              withCount:(NSInteger)count
+              andOffset:(NSInteger)offset
+              onSuccess:(void(^)(NSArray *friends))success
+              onFailure:(void(^)(NSError *error, NSInteger statusCode))failure {
     NSDictionary *parameters = @{
                                  @"user_id": @(friendId),
                                  @"order": @"name",
@@ -112,7 +118,7 @@
                                  @"offset": @(offset),
                                  @"fields": @[@"photo_100", @"online"],
                                  @"name_case": @"nom",
-                                 @"v": (@5.8)};
+                                 @"v": (@5.28)};
 
     [self.requestOperationManager GET:@"friends.get?"
                            parameters:parameters
@@ -127,14 +133,16 @@
                               }];
 }
 
-- (void) getFriendInfoForId:(NSInteger)friendId
-                   onSuccess:(void(^)(NSArray *friendsInfo))success
-                   onFailure:(void(^)(NSError *error, NSInteger statusCode))failure {
+- (void)getUserInfoForId:(NSInteger)friendId
+               onSuccess:(void(^)(NSArray *userInfo))success
+               onFailure:(void(^)(NSError *error, NSInteger statusCode))failure {
     NSDictionary *parameters = @{
                                  @"user_ids": @(friendId),
-                                 @"fields": @[@"photo_100", @"bdate", @"city", @"country", @"photo_max", @"online", @"online_mobile", @"last_seen"],
+                                 @"fields": @[@"photo_100", @"bdate", @"city", @"country", @"photo_max", @"online", @"online_mobile", @"last_seen", @"counters", @"can_post", @"can_write_private_message", @"sex"],
                                  @"name_case": @"nom",
-                                 @"v": (@5.8)};
+                                 @"lang": @"ru",
+                                 @"access_token": self.accessToken.token,
+                                 @"v": (@5.28)};
     
     [self.requestOperationManager GET:@"users.get?"
                            parameters:parameters
@@ -149,18 +157,18 @@
                               }];
 }
 
-- (void) getFollowersForId:(NSInteger)friendId
-                   withCount:(NSInteger)count
-                   andOffset:(NSInteger)offset
-                   onSuccess:(void(^)(NSArray *followers))success
-                   onFailure:(void(^)(NSError *error, NSInteger statusCode))failure {
+- (void)getFollowersForId:(NSInteger)friendId
+                withCount:(NSInteger)count
+                andOffset:(NSInteger)offset
+                onSuccess:(void(^)(NSArray *followers))success
+                onFailure:(void(^)(NSError *error, NSInteger statusCode))failure {
     NSDictionary *parameters = @{
                                  @"user_id": @(friendId),
                                  @"count": @(count),
                                  @"offset": @(offset),
                                  @"fields": @[@"photo_100", @"online"],
                                  @"name_case": @"nom",
-                                 @"v": (@5.8)};
+                                 @"v": (@5.28)};
     
     [self.requestOperationManager GET:@"users.getFollowers?"
                            parameters:parameters
@@ -175,18 +183,18 @@
                               }];
 }
 
-- (void) getUserFollowingsForId:(NSInteger)friendId
-                 withCount:(NSInteger)count
-                 andOffset:(NSInteger)offset
-                 onSuccess:(void(^)(NSArray *followers))success
-                 onFailure:(void(^)(NSError *error, NSInteger statusCode))failure {
+- (void)getUserFollowingsForId:(NSInteger)friendId
+                     withCount:(NSInteger)count
+                     andOffset:(NSInteger)offset
+                     onSuccess:(void(^)(NSArray *followers))success
+                     onFailure:(void(^)(NSError *error, NSInteger statusCode))failure {
     NSDictionary *parameters = @{
                                  @"user_id": @(friendId),
                                  @"count": @(count),
                                  @"offset": @(offset),
                                  @"fields": @[@"photo_100", @"online"],
                                  @"name_case": @"nom",
-                                 @"v": (@5.8)};
+                                 @"v": (@5.28)};
     
     [self.requestOperationManager GET:@"users.getFollowers?"
                            parameters:parameters
@@ -201,16 +209,17 @@
                               }];
 }
 
-- (void) getGroupsForId:(NSInteger)userId
-               withCount:(NSInteger)count
-               andOffset:(NSInteger)offset
-               onSuccess:(void(^)(NSArray *groups))success
-               onFailure:(void(^)(NSError *error, NSInteger statusCode))failure {
+- (void)getGroupsForId:(NSInteger)userId
+             withCount:(NSInteger)count
+             andOffset:(NSInteger)offset
+             onSuccess:(void(^)(NSArray *groups))success
+             onFailure:(void(^)(NSError *error, NSInteger statusCode))failure {
     NSDictionary *parameters = @{
                                  @"user_id": @(userId),
                                  @"extended": @1,
                                  @"count": @(count),
                                  @"offset": @(offset),
+                                 @"fields": @[@"city", @"country", @"members_count"],
                                  @"access_token": self.accessToken.token,
                                  @"v": (@5.28)};
     
@@ -227,19 +236,21 @@
                               }];
 }
 
-- (void) getWallForId:(NSInteger)ownerID
-              withCount:(NSInteger)count
-              andOffset:(NSInteger)offset
-              onSuccess:(void(^)(NSArray *posts, NSArray *users, NSArray *groups))success
-              onFailure:(void(^)(NSError *error, NSInteger statusCode))failure {
+- (void)getWallForId:(NSInteger)ownerID
+           withCount:(NSInteger)count
+           andOffset:(NSInteger)offset
+          withFilter:(NSString *)filter
+           onSuccess:(void(^)(NSArray *posts, NSArray *users, NSArray *groups))success
+           onFailure:(void(^)(NSError *error, NSInteger statusCode))failure {
     NSDictionary *parameters = @{
                                  @"owner_id": @(ownerID),
                                  @"extended": @1,
                                  @"count": @(count),
                                  @"offset": @(offset),
-                                 @"filter": @"all",
+                                 @"filter": filter,
                                  @"lang": @"ru",
-                                 @"v": (@5.8)};
+                                 @"access_token": self.accessToken.token,
+                                 @"v": (@5.28)};
     
     [self.requestOperationManager GET:@"wall.get?"
                            parameters:parameters
@@ -249,6 +260,79 @@
                                   NSArray *groups = [responseObject valueForKeyPath:@"response.groups"];
                                   if (success) {
                                       success(posts, users, groups);
+                                  }
+                              }
+                              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                  failure(error, error.code);
+                              }];
+}
+
+- (void)postText:(NSString *)text
+          onWall:(NSString *)ownerID
+       onSuccess:(void(^)(id result))success
+       onFailure:(void(^)(NSError *error, NSInteger statusCode))failure {
+    
+    NSDictionary *params = @{@"owner_id": ownerID,
+                             @"message": text,
+                             @"access_token": self.accessToken.token,
+                             @"v": @"5.28"};
+    
+    [self.requestOperationManager POST:@"wall.post?"
+     parameters:params
+     success:^(AFHTTPRequestOperation *operation, id responseObject) {
+         if (success) {
+             success(responseObject);
+         }
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         NSLog(@"Error: %@", error);
+         if (failure) {
+             failure(error, operation.response.statusCode);
+         }
+     }];
+}
+
+- (void)getDialogsWithCount:(NSInteger)count
+                  andOffset:(NSInteger)offset
+                  onSuccess:(void(^)(NSArray *dialogs))success
+                  onFailure:(void(^)(NSError *error, NSInteger statusCode))failure {
+    NSDictionary *parameters = @{
+                                 @"count": @(count),
+                                 @"offset": @(offset),
+                                 @"access_token": self.accessToken.token,
+                                 @"v": (@5.28)};
+    
+    [self.requestOperationManager GET:@"messages.getDialogs?"
+                           parameters:parameters
+                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                  NSArray *dialogs = [[responseObject valueForKey:@"response"] valueForKey:@"items"];
+                                  if (success) {
+                                      success(dialogs);
+                                  }
+                              }
+                              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                  failure(error, error.code);
+                              }];
+}
+
+- (void)getMessageHistoryWithFriendId:(NSInteger)userID
+                            withCount:(NSInteger)count
+                            andOffset:(NSInteger)offset
+                            onSuccess:(void(^)(NSArray *messages, NSNumber *totalCount))success
+                            onFailure:(void(^)(NSError *error, NSInteger statusCode))failure {
+    NSDictionary *parameters = @{
+                                 @"count": @(count),
+                                 @"offset": @(offset),
+                                 @"user_id": @(userID),
+                                 @"access_token": self.accessToken.token,
+                                 @"v": (@5.28)};
+    
+    [self.requestOperationManager GET:@"messages.getHistory?"
+                           parameters:parameters
+                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                  NSArray *messages = [[responseObject valueForKey:@"response"] valueForKey:@"items"];
+                                  NSNumber *totalCount = [[responseObject valueForKey:@"response"] valueForKey:@"count"];
+                                  if (success) {
+                                      success(messages, totalCount);
                                   }
                               }
                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {

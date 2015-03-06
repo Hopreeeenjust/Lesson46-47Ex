@@ -24,6 +24,12 @@
         self.lastSeen = [[dictionary valueForKeyPath:@"last_seen.time"] integerValue];
         self.online = [[dictionary valueForKey:@"online"] integerValue];
         self.onlineMobile = [[dictionary valueForKey:@"online_mobile"] integerValue];
+        self.friendsCount = [[dictionary valueForKeyPath:@"counters.friends"] integerValue];
+        self.groupsCount = [[dictionary valueForKeyPath:@"counters.groups"] integerValue];
+        self.followersCount = [[dictionary valueForKeyPath:@"counters.followers"] integerValue];
+        self.canPost = [[dictionary valueForKey:@"can_post"] boolValue];
+        self.canSendMessage = [[dictionary valueForKey:@"can_write_private_message"] boolValue];
+        self.gender = [[dictionary valueForKey:@"sex"] integerValue];
     }
     return self;
 }

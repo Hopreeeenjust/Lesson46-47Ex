@@ -15,6 +15,7 @@
 @property (assign, nonatomic) NSInteger groupID;
 @property (strong, nonatomic) NSString *city;
 @property (strong, nonatomic) NSString *country;
+@property (assign, nonatomic) NSInteger membersCount;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 @end

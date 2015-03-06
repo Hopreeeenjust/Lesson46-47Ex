@@ -11,15 +11,15 @@
 @class RJUser;
 
 @interface RJServerManager : NSObject
-@property (strong, nonatomic, readonly) RJUser *currentUser;
+@property (strong, nonatomic) RJUser *loggedUser;
 
 + (RJServerManager *)sharedManager;
 
 - (void)authorizeUser:(void(^)(RJUser *user)) completion;
 
-- (void) getUser:(NSString*) userID
-       onSuccess:(void(^)(RJUser* user)) success
-       onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure;
+- (void)getUser:(NSArray *)userIDs
+      onSuccess:(void(^)(NSArray *users)) success
+      onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure;
 
 - (void) getFriendsForId:(NSInteger)friendId
                withCount:(NSInteger)count
@@ -27,9 +27,9 @@
                onSuccess:(void(^)(NSArray *friends))success
                onFailure:(void(^)(NSError *error, NSInteger statusCode))failure;
 
-- (void) getFriendInfoForId:(NSInteger)friendId
-                  onSuccess:(void(^)(NSArray *friends))success
-                  onFailure:(void(^)(NSError *error, NSInteger statusCode))failure;
+- (void) getUserInfoForId:(NSInteger)friendId
+                onSuccess:(void(^)(NSArray *userInfo))success
+                onFailure:(void(^)(NSError *error, NSInteger statusCode))failure;
 
 - (void) getFollowersForId:(NSInteger)friendId
                  withCount:(NSInteger)count
@@ -46,6 +46,23 @@
 - (void) getWallForId:(NSInteger)ownerID
             withCount:(NSInteger)count
             andOffset:(NSInteger)offset
+           withFilter:(NSString *)filter
             onSuccess:(void(^)(NSArray *posts, NSArray *users, NSArray *groups))success
             onFailure:(void(^)(NSError *error, NSInteger statusCode))failure;
+
+- (void)postText:(NSString *)text
+          onWall:(NSString *)ownerID
+       onSuccess:(void(^)(id result))success
+       onFailure:(void(^)(NSError *error, NSInteger statusCode))failure;
+
+- (void)getDialogsWithCount:(NSInteger)count
+                  andOffset:(NSInteger)offset
+                  onSuccess:(void(^)(NSArray *dialogs))success
+                  onFailure:(void(^)(NSError *error, NSInteger statusCode))failure;
+
+- (void)getMessageHistoryWithFriendId:(NSInteger)userID
+                            withCount:(NSInteger)count
+                            andOffset:(NSInteger)offset
+                            onSuccess:(void(^)(NSArray *messages, NSNumber *totalCount))success
+                            onFailure:(void(^)(NSError *error, NSInteger statusCode))failure;
 @end
