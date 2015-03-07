@@ -96,7 +96,7 @@ static BOOL firstTimeAppear = YES;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    if (firstTimeAppear) {
+    if (firstTimeAppear && ([accessTokenExpirationDate compare:[NSDate date]] == NSOrderedDescending || !accessTokenExpirationDate)) {
         [[RJServerManager sharedManager] authorizeUser:^(RJUser *user) {
             if (!self.user) {
                 self.user = [[RJServerManager sharedManager] loggedUser];
@@ -105,6 +105,9 @@ static BOOL firstTimeAppear = YES;
             [self getWallPostsFromServerWithFilter:@"all"];
         }];
         firstTimeAppear = NO;
+    } else {
+        [self getUserInfoFromServer];
+        [self getWallPostsFromServerWithFilter:@"all"];
     }
 }
 

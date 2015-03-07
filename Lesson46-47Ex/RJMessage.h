@@ -8,7 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger, RJMessageState) {
+    RJMessageStateUnread = 0,
+    RJMessageStateRead
+};
+
 @interface RJMessage : NSObject
 @property (assign, nonatomic) NSTimeInterval messageInterval;
 @property (strong, nonatomic) NSString *text;
+@property (assign, nonatomic) BOOL messageIsMine;
+@property (assign, nonatomic) RJMessageState messageState;
+
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 @end

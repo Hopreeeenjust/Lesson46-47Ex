@@ -13,8 +13,10 @@
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
     if (self) {
-        self.lastMessageInterval = [[dictionary valueForKeyPath:@"message.date"] integerValue];
-        self.text = [dictionary valueForKeyPath:@"message.body"];
+        self.messageInterval = [[dictionary valueForKeyPath:@"date"] integerValue];
+        self.text = [dictionary valueForKeyPath:@"body"];
+        self.messageIsMine = [[dictionary valueForKeyPath:@"out"] boolValue];
+        self.messageState = [[dictionary valueForKeyPath:@"read_state"] integerValue];
     }
     return self;
 }

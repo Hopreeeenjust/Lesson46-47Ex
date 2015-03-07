@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+@class RJMessageLabel;
+
 @interface RJMessageCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *messageTextLabel;
+@property (weak, nonatomic) IBOutlet RJMessageLabel *messageTextLabel;
 @end

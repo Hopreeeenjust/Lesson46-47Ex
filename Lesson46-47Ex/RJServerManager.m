@@ -44,6 +44,7 @@
     RJLoginViewController* vc = [[RJLoginViewController alloc] initWithCompletionBlock:^(RJAccessToken *token) {
         self.accessToken = token;
         if (token) {
+            accessTokenExpirationDate = token.expirationDate;
             [self getUser:@[self.accessToken.userID]
                 onSuccess:^(NSArray *users) {
                     if (completion) {

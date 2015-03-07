@@ -10,6 +10,9 @@
 #import "RJMessageCell.h"
 #import "RJUser.h"
 #import "RJServerManager.h"
+#import "RJMessage.h"
+#import "RJUserProfileController.h"
+#import "RJMessageLabel.h"
 
 @interface RJChatViewController () <UITableViewDataSource>
 @property (strong, nonatomic) NSArray *messagesArray;
@@ -34,14 +37,18 @@ NSInteger messagesBatch = 20;
     self.textView.textColor = [UIColor lightGrayColor];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.estimatedRowHeight = self.tableView.rowHeight;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     [self.userButton setImage:self.userImage forState:UIControlStateNormal];
     self.userButton.imageView.layer.cornerRadius = CGRectGetWidth(self.userButton.bounds) / 2;
     self.userButton.imageView.clipsToBounds = YES;
     
-    [self getSetNavigationBarTitle];
+    [self setNavigationBarTitle];
     
     self.messagesArray = [NSArray new];
+    
+    [self getMessageFromServer];
 
     UIRefreshControl *refresh = [UIRefreshControl new];
     [refresh addTarget:self action:@selector(refreshMessages) forControlEvents:UIControlEventValueChanged];
@@ -50,6 +57,13 @@ NSInteger messagesBatch = 20;
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if ([self.tableView numberOfRowsInSection:0] > 0) {
+        [self performSelector:@selector(goToBottom) withObject:nil];
+    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -62,96 +76,26 @@ NSInteger messagesBatch = 20;
     static NSString *inboxIdentifier = @"Inbox";
     static NSString *outboxIdentifier = @"Outbox";
     
-//    RJUser *user;
-//    RJDialog *dialog = [self.dialogsArray objectAtIndex:indexPath.row];
-//    if ([self.usersArray count] > 0) {
-//        user = [self.usersArray objectAtIndex:indexPath.row];
-//    }
+    NSString *identifier;
     
-//    NSString *identifier;
-//    if (mess.lastMessageIsMine) {
-//        identifier = myIdentifier;
-//    } else {
-//        identifier = friendsIdentifier;
-//    }
+    RJMessage *message = [self.messagesArray objectAtIndex:indexPath.row];
     
-    RJMessageCell *cell = [tableView dequeueReusableCellWithIdentifier:inboxIdentifier];
-    if (!cell) {
-        cell = [[RJMessageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:inboxIdentifier];
+    if (message.messageIsMine) {
+        identifier = outboxIdentifier;
+    } else {
+        identifier = inboxIdentifier;
     }
     
-//    cell.myImageView.image = nil;
-//    cell.myImageView.layer.cornerRadius = CGRectGetHeight(cell.myImageView.bounds) / 2;
-//    cell.myImageView.clipsToBounds = YES;
-//    __weak RJDialogsCell *weakCell = cell;
-//    if (dialog.lastMessageIsMine) {
-//        if (!self.loggedUserPhotoDownloaded) {
-//            NSURL *imageURL = [NSURL URLWithString:[[[RJServerManager sharedManager] loggedUser] imageUrl]];
-//            NSURLRequest *request = [NSURLRequest requestWithURL:imageURL];
-//            [cell.myImageView setImageWithURLRequest:request
-//                                    placeholderImage:nil
-//                                             success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-//                                                 weakCell.myImageView.image = image;
-//                                                 self.loggedUserImage = image;
-//                                                 [weakCell layoutSubviews];
-//                                                 self.loggedUserPhotoDownloaded = YES;
-//                                             }
-//                                             failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-//                                                 NSLog(@"Error = %@, code = %ld", [error localizedDescription], response.statusCode);
-//                                             }];
-//        } else {
-//            cell.myImageView.image = self.loggedUserImage;
-//        }
-//    }
-//    
-//    if (dialog.text) {
-//        cell.messageTextLabel.text = dialog.text;
-//    }
-//    if (dialog.messageState == RJMessageStateUnread && dialog.lastMessageIsMine) {
-//        cell.messageTextLabel.backgroundColor = [UIColor colorWithRed:0.906f green:0.95f blue:0.996f alpha:1];
-//    } else if (dialog.messageState == RJMessageStateUnread) {
-//        cell.backgroundColor = [UIColor colorWithRed:0.906f green:0.95f blue:0.996f alpha:1];
-//    } else {
-//        cell.backgroundColor = [UIColor clearColor];
-//        cell.messageTextLabel.backgroundColor = [UIColor clearColor];
-//    }
-//    [cell.messageTextLabel sizeToFit];
-//    
-//    if (dialog.lastMessageInterval) {
-//        cell.dateLabel.text = [self stringDateFromTimeInterval:dialog.lastMessageInterval];
-//    }
-//    
-//    if (user) {
-//        cell.nameLabel.text = [NSString stringWithFormat:@"%@ %@", user.firstName, user.lastName];
-//        [cell.nameLabel sizeToFit];
-//    }
-//    
-//    [cell.onlineImageView removeFromSuperview];
-//    CGFloat imageViewSize = 44.f;
-//    CGFloat horizontalOffset = 5.f;
-//    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(cell.nameLabel.frame) - imageViewSize / 2 + horizontalOffset, CGRectGetMinY(cell.nameLabel.frame) + CGRectGetHeight(cell.nameLabel.bounds) / 2 - imageViewSize / 2, imageViewSize, imageViewSize)];
-//    if (user.online && user.onlineMobile) {
-//        imageView.image = [UIImage imageNamed:@"online_mobile_small"];
-//    } else if (user.online) {
-//        imageView.image = [UIImage imageNamed:@"online"];
-//    }
-//    cell.onlineImageView = imageView;
-//    [cell.contentView addSubview:cell.onlineImageView];
-//    
-//    NSURL *imageURL = [NSURL URLWithString:user.imageUrl];
-//    NSURLRequest *request = [NSURLRequest requestWithURL:imageURL];
-//    cell.friendsImageView.image = nil;
-//    cell.friendsImageView.layer.cornerRadius = CGRectGetHeight(cell.friendsImageView.bounds) / 2;
-//    cell.friendsImageView.clipsToBounds = YES;
-//    [cell.friendsImageView setImageWithURLRequest:request
-//                                 placeholderImage:nil
-//                                          success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-//                                              weakCell.friendsImageView.image = image;
-//                                              [weakCell layoutSubviews];
-//                                          }
-//                                          failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-//                                              NSLog(@"Error = %@, code = %ld", [error localizedDescription], response.statusCode);
-//                                          }];
+    RJMessageCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+
+    cell.messageTextLabel.text = message.text;
+    cell.messageTextLabel.layer.cornerRadius = 7.f;
+    cell.messageTextLabel.clipsToBounds = YES;
+    cell.messageTextLabel.numberOfLines = 0;
+    cell.messageTextLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    
+    cell.timeLabel.text = [self stringTimeFromTimeInterval:message.messageInterval];
+    
     return cell;
 }
 
@@ -162,6 +106,12 @@ NSInteger messagesBatch = 20;
 }
 
 #pragma mark - Actions
+
+- (IBAction)actionShowUsersProfile:(id)sender {
+    RJUserProfileController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"RJFriendProfileController"];
+    vc.user = self.user;
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
 - (void) refreshMessages {
 //    [[RJServerManager sharedManager]
@@ -181,7 +131,7 @@ NSInteger messagesBatch = 20;
 
 #pragma mark - API
 
-- (void)getSetNavigationBarTitle {
+- (void)setNavigationBarTitle {
     [[RJServerManager sharedManager]
      getUserInfoForId:self.user.userID
      onSuccess:^(NSArray *userInfo) {
@@ -192,9 +142,9 @@ NSInteger messagesBatch = 20;
          NSString *onlineStatus;
          if (user.online) {
              if (user.onlineMobile) {
-                 onlineStatus = @"Online (моб.)";
+                 onlineStatus = @"online (моб.)";
              } else {
-                 onlineStatus = @"Online";
+                 onlineStatus = @"online";
              }
          } else {
              onlineStatus = [self statusText];
@@ -220,54 +170,46 @@ NSInteger messagesBatch = 20;
      }];
 }
 
+- (void)getMessageFromServer {
+    UIActivityIndicatorView *view;
+    if ([self.messagesArray count] == 0) {
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        view = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        view.center = CGPointMake(CGRectGetMidX(self.tableView.bounds), 20);
+        [self.tableView addSubview:view];
+        [view startAnimating];
+    }
+    
+    [[RJServerManager sharedManager]
+     getMessageHistoryWithFriendId:self.user.userID
+     withCount:messagesBatch
+     andOffset:[self.messagesArray count]
+     onSuccess:^(NSArray *messages, NSNumber *totalCount) {
+         for (NSDictionary *messageInfo in messages) {
+             RJMessage *message = [[RJMessage alloc] initWithDictionary:messageInfo];
+             [[self mutableArrayValueForKey:@"messagesArray"] addObject:message];
+         }
+         self.messagesArray = [[self.messagesArray reverseObjectEnumerator] allObjects];
+         [self.tableView reloadData];
+         [view stopAnimating];
+     }
+     onFailure:^(NSError *error, NSInteger statusCode) {
+         NSLog(@"Error = %@, code = %ld", [error localizedDescription], statusCode);
+     }];
+}
+
 #pragma mark - Methods
-//
-//- (NSString *)stringDateFromTimeInterval:(NSTimeInterval)timeInterval {
-//    NSDate *messageDate = [NSDate dateWithTimeIntervalSince1970:timeInterval];
-//    NSString *dateString = nil;
-//    NSDateFormatter *formatter = [NSDateFormatter new];
-//    [formatter setDateFormat:@"dd.MM.yyyy"];
-//    NSTimeZone *tz = [NSTimeZone localTimeZone];
-//    [formatter setTimeZone:tz];
-//    NSString *dateS = [formatter stringFromDate:messageDate];
-//    
-//    NSDateFormatter *justTimeFormatter = [NSDateFormatter new];
-//    [justTimeFormatter setDateFormat:@"HH:mm"];
-//    [justTimeFormatter setTimeZone:tz];
-//    NSString *time = [justTimeFormatter stringFromDate:messageDate];
-//    
-//    NSDateFormatter *justDayOfWeekFormatter = [NSDateFormatter new];
-//    [justDayOfWeekFormatter setDateFormat:@"EEE"];
-//    [justDayOfWeekFormatter setTimeZone:tz];
-//    [justDayOfWeekFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"RU"]];
-//    NSString *dayOfWeek = [justDayOfWeekFormatter stringFromDate:messageDate];
-//    
-//    NSDateFormatter *justYearFormatter = [NSDateFormatter new];
-//    [justYearFormatter setDateFormat:@"yyyy"];
-//    NSString *messageYear = [justYearFormatter stringFromDate:messageDate];
-//    
-//    NSDateFormatter *dateAndMonthFormatter = [NSDateFormatter new];
-//    [dateAndMonthFormatter setDateFormat:@"dd MMM"];
-//    [dateAndMonthFormatter setTimeZone:tz];
-//    [dateAndMonthFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"RU"]];
-//    NSString *dateAndMonth = [dateAndMonthFormatter stringFromDate:messageDate];
-//    
-//    NSDate *currentDate = [NSDate date];
-//    NSDate *aWeekAgo  = [currentDate dateByAddingTimeInterval: -604800.0];
-//    NSDate *yesterday  = [currentDate dateByAddingTimeInterval: -86400.0];
-//    if ([[formatter stringFromDate:currentDate] isEqualToString:dateS]) {
-//        dateString = time;
-//    } else if ([[formatter stringFromDate:yesterday] isEqualToString:dateS]) {
-//        dateString = @"вчера";
-//    } else if ([messageDate compare:aWeekAgo] == NSOrderedDescending){
-//        dateString = dayOfWeek;
-//    } else if ([messageYear isEqualToString:[justYearFormatter stringFromDate:currentDate]]) {
-//        dateString = dateAndMonth;
-//    } else {
-//        dateString = dateS;
-//    }
-//    return dateString;
-//}
+
+- (NSString *)stringTimeFromTimeInterval:(NSTimeInterval)timeInterval {
+    NSDate *messageDate = [NSDate dateWithTimeIntervalSince1970:timeInterval];
+    NSTimeZone *tz = [NSTimeZone localTimeZone];
+    NSDateFormatter *justTimeFormatter = [NSDateFormatter new];
+    [justTimeFormatter setDateFormat:@"HH:mm"];
+    [justTimeFormatter setTimeZone:tz];
+    NSString *time = [justTimeFormatter stringFromDate:messageDate];
+
+    return time;
+}
 
 - (NSString *)statusText {
     NSString *status = nil;
@@ -303,5 +245,18 @@ NSInteger messagesBatch = 20;
     }
     return status;
 }
+
+-(void)goToBottom {
+    NSIndexPath *lastIndexPath = [self lastIndexPath];
+    
+    [self.tableView scrollToRowAtIndexPath:lastIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+}
+
+-(NSIndexPath *)lastIndexPath {
+    NSInteger lastSectionIndex = MAX(0, [self.tableView numberOfSections] - 1);
+    NSInteger lastRowIndex = MAX(0, [self.tableView numberOfRowsInSection:lastSectionIndex] - 1);
+    return [NSIndexPath indexPathForRow:lastRowIndex inSection:lastSectionIndex];
+}
+
 
 @end

@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="1QZ-Y8-CDK">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--VK Friends-->
@@ -341,8 +342,8 @@
             <objects>
                 <viewController storyboardIdentifier="RJWritePostController" id="TGb-Tz-HiB" customClass="RJWritePostController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="vtD-CD-viI"/>
-                        <viewControllerLayoutGuide type="bottom" id="fdC-SG-YGd"/>
+                        <viewControllerLayoutGuide type="top" id="nBk-Qn-Z01"/>
+                        <viewControllerLayoutGuide type="bottom" id="pOo-70-tXo"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Xy8-4L-vdV">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -503,8 +504,8 @@
             <objects>
                 <viewController storyboardIdentifier="RJChatViewController" id="EHl-c2-QAS" customClass="RJChatViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="DbF-XC-xed"/>
-                        <viewControllerLayoutGuide type="bottom" id="D8V-1X-cOv"/>
+                        <viewControllerLayoutGuide type="top" id="or7-W6-6ft"/>
+                        <viewControllerLayoutGuide type="bottom" id="ubI-cE-p2o"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Fjt-Hp-EtQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -533,26 +534,32 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="562"/>
                                 <color key="backgroundColor" red="0.91764705879999997" green="0.94117647059999998" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Inbox" id="9Ik-m7-Rp6" customClass="RJMessageCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Inbox" id="9Ik-m7-Rp6" customClass="RJMessageCell">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9Ik-m7-Rp6" id="Yne-Yy-bQw">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TSh-6g-jtF">
-                                                    <rect key="frame" x="18" y="8" width="231" height="24"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TSh-6g-jtF" customClass="RJMessageLabel">
+                                                    <rect key="frame" x="18" y="8" width="35.5" height="24"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L1u-ut-tlI">
-                                                    <rect key="frame" x="257" y="19" width="42" height="21"/>
+                                                    <rect key="frame" x="245" y="9" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                                     <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="TSh-6g-jtF" firstAttribute="leading" secondItem="Yne-Yy-bQw" secondAttribute="leadingMargin" constant="10" id="0wX-En-ClM"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="TSh-6g-jtF" secondAttribute="trailing" constant="100" id="F2Z-f0-HaA"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="TSh-6g-jtF" secondAttribute="bottom" constant="4" id="Onn-IZ-Xof"/>
+                                                <constraint firstItem="TSh-6g-jtF" firstAttribute="top" secondItem="Yne-Yy-bQw" secondAttribute="topMargin" id="Tue-CP-nE0"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
@@ -560,26 +567,42 @@
                                             <outlet property="timeLabel" destination="L1u-ut-tlI" id="4h7-1Y-E8F"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Outbox" id="eYO-MI-NQ9" customClass="RJMessageCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Outbox" rowHeight="50" id="eYO-MI-NQ9" customClass="RJMessageCell">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eYO-MI-NQ9" id="EcL-tS-14b">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YS2-ny-NIb">
-                                                    <rect key="frame" x="129" y="10" width="231" height="24"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YS2-ny-NIb" customClass="RJMessageLabel">
+                                                    <rect key="frame" x="129" y="10" width="231" height="30"/>
                                                     <color key="backgroundColor" red="0.59331422290000002" green="0.7838513922" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="231" id="lLA-oN-HN0"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kfI-vp-FeZ">
-                                                    <rect key="frame" x="79" y="17" width="42" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kfI-vp-FeZ">
+                                                    <rect key="frame" x="91" y="15" width="42" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="MjT-sY-6iq"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                                     <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="kfI-vp-FeZ" firstAttribute="top" secondItem="YS2-ny-NIb" secondAttribute="bottom" constant="-25" id="EYR-xu-iVF"/>
+                                                <constraint firstItem="YS2-ny-NIb" firstAttribute="leading" secondItem="kfI-vp-FeZ" secondAttribute="trailing" constant="-4" id="Gxo-7M-cLM"/>
+                                                <constraint firstItem="YS2-ny-NIb" firstAttribute="top" secondItem="EcL-tS-14b" secondAttribute="topMargin" constant="2" id="V8e-aB-MoK"/>
+                                                <constraint firstItem="kfI-vp-FeZ" firstAttribute="leading" secondItem="EcL-tS-14b" secondAttribute="leadingMargin" constant="83" id="aI1-JI-WzK"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="YS2-ny-NIb" secondAttribute="bottom" constant="2" id="cFK-dH-651"/>
+                                                <constraint firstItem="YS2-ny-NIb" firstAttribute="leading" secondItem="EcL-tS-14b" secondAttribute="leadingMargin" constant="121" id="ocY-xF-gYy"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="YS2-ny-NIb" secondAttribute="trailing" constant="7" id="xA6-fE-ELt"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="kfI-vp-FeZ" secondAttribute="bottom" constant="6" id="zLU-pK-94W"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
@@ -605,6 +628,9 @@
                                 <state key="normal">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="actionShowUsersProfile:" destination="EHl-c2-QAS" eventType="touchUpInside" id="en7-Dp-J6l"/>
+                                </connections>
                             </button>
                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </barButtonItem>

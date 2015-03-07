@@ -14,6 +14,7 @@
 		E01CE0511A9FC4EC00A9F5E1 /* RJFriendListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E01CE0501A9FC4EC00A9F5E1 /* RJFriendListCell.m */; };
 		E01CE0551A9FCEF900A9F5E1 /* online_mobile@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = E01CE0541A9FCEF900A9F5E1 /* online_mobile@2X.png */; };
 		E01CE0571A9FD0A900A9F5E1 /* online_mobile_small@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = E01CE0561A9FD0A900A9F5E1 /* online_mobile_small@2X.png */; };
+		E048538C1AAB471000094CA7 /* RJMessageLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = E048538B1AAB471000094CA7 /* RJMessageLabel.m */; };
 		E0753B741A9DD35800EE79B5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E0753B731A9DD35800EE79B5 /* main.m */; };
 		E0753B771A9DD35800EE79B5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E0753B761A9DD35800EE79B5 /* AppDelegate.m */; };
 		E0753B7A1A9DD35800EE79B5 /* RJFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0753B791A9DD35800EE79B5 /* RJFriendsViewController.m */; };
@@ -81,6 +82,8 @@
 		E01CE0501A9FC4EC00A9F5E1 /* RJFriendListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RJFriendListCell.m; path = ../RJFriendListCell.m; sourceTree = "<group>"; };
 		E01CE0541A9FCEF900A9F5E1 /* online_mobile@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "online_mobile@2X.png"; sourceTree = "<group>"; };
 		E01CE0561A9FD0A900A9F5E1 /* online_mobile_small@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "online_mobile_small@2X.png"; sourceTree = "<group>"; };
+		E048538A1AAB471000094CA7 /* RJMessageLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RJMessageLabel.h; sourceTree = "<group>"; };
+		E048538B1AAB471000094CA7 /* RJMessageLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RJMessageLabel.m; sourceTree = "<group>"; };
 		E0753B6E1A9DD35800EE79B5 /* Lesson46-47Ex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lesson46-47Ex.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0753B721A9DD35800EE79B5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E0753B731A9DD35800EE79B5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -198,6 +201,15 @@
 			path = Images;
 			sourceTree = SOURCE_ROOT;
 		};
+		E048538D1AAB471D00094CA7 /* Custom Labels */ = {
+			isa = PBXGroup;
+			children = (
+				E048538A1AAB471000094CA7 /* RJMessageLabel.h */,
+				E048538B1AAB471000094CA7 /* RJMessageLabel.m */,
+			);
+			name = "Custom Labels";
+			sourceTree = "<group>";
+		};
 		E0753B651A9DD35700EE79B5 = {
 			isa = PBXGroup;
 			children = (
@@ -225,6 +237,7 @@
 				E0EC8DBD1AA0AF2800C6FD26 /* Singleton */,
 				E0EC8DBB1AA0AEB300C6FD26 /* Models */,
 				E096C7771AA5D28D00AAC0E0 /* Access Token */,
+				E048538D1AAB471D00094CA7 /* Custom Labels */,
 				E0EC8DBE1AA0AF6A00C6FD26 /* Controllers */,
 				E0753B7B1A9DD35800EE79B5 /* Main.storyboard */,
 				E0753B751A9DD35800EE79B5 /* AppDelegate.h */,
@@ -543,6 +556,7 @@
 				E096C76C1AA5C9EB00AAC0E0 /* AFURLRequestSerialization.m in Sources */,
 				E096C7691AA5C9EB00AAC0E0 /* AFNetworkReachabilityManager.m in Sources */,
 				E00F4A161AA3928700AD3763 /* RJPhoto.m in Sources */,
+				E048538C1AAB471000094CA7 /* RJMessageLabel.m in Sources */,
 				E0D135201AA6F6EA001E3F79 /* RJWritePostController.m in Sources */,
 				E096C7731AA5C9EB00AAC0E0 /* UIImageView+AFNetworking.m in Sources */,
 				E0753BDB1A9E058600EE79B5 /* UIScrollView+InfiniteScroll.m in Sources */,

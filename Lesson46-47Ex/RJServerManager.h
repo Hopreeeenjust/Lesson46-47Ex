@@ -10,6 +10,8 @@
 
 @class RJUser;
 
+static const NSDate *accessTokenExpirationDate;
+
 @interface RJServerManager : NSObject
 @property (strong, nonatomic) RJUser *loggedUser;
 
