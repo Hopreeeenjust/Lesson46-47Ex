@@ -11,7 +11,7 @@
 @implementation RJMessageLabel
 
 - (void)drawTextInRect:(CGRect)rect {
-    UIEdgeInsets insets = {0, 7, 0, 7};
+    UIEdgeInsets insets = {0, 0, 0, 0};
     [super drawTextInRect:UIEdgeInsetsInsetRect(rect, insets)];
 }
 

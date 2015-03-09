@@ -67,4 +67,14 @@ static const NSDate *accessTokenExpirationDate;
                             andOffset:(NSInteger)offset
                             onSuccess:(void(^)(NSArray *messages, NSNumber *totalCount))success
                             onFailure:(void(^)(NSError *error, NSInteger statusCode))failure;
+
+- (void)sendMessage:(NSString *)message
+       toUserWithID:(NSInteger)userID
+          onSuccess:(void(^)(id result))success
+          onFailure:(void(^)(NSError *error, NSInteger statusCode))failure;
+
+- (void)markAllMessagesAsRead:(NSString *)userIDs
+                    onSuccess:(void(^)(id result))success
+                    onFailure:(void(^)(NSError *error, NSInteger statusCode))failure;
+
 @end

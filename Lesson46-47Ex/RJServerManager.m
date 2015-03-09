@@ -341,5 +341,47 @@
                               }];
 }
 
+- (void)sendMessage:(NSString *)message
+       toUserWithID:(NSInteger)userID
+          onSuccess:(void(^)(id result))success
+          onFailure:(void(^)(NSError *error, NSInteger statusCode))failure {
+    NSDictionary *parameters = @{
+                                 @"user_id": @(userID),
+                                 @"message": message,
+                                 @"access_token": self.accessToken.token,
+                                 @"v": (@5.28)};
+    
+    [self.requestOperationManager GET:@"messages.send?"
+                           parameters:parameters
+                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                  if (success) {
+                                      success(responseObject);
+                                  }
+                              }
+                              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                  failure(error, error.code);
+                              }];
+}
+
+- (void)markAllMessagesAsRead:(NSString *)userIDs
+                    onSuccess:(void(^)(id result))success
+                    onFailure:(void(^)(NSError *error, NSInteger statusCode))failure {
+    NSDictionary *parameters = @{
+                                 @"message_ids": userIDs,
+                                 @"access_token": self.accessToken.token,
+                                 @"v": (@5.28)};
+    
+    [self.requestOperationManager GET:@"messages.markAsRead?"
+                           parameters:parameters
+                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                  if (success) {
+                                      success(responseObject);
+                                  }
+                              }
+                              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                  failure(error, error.code);
+                              }];
+}
+
 @end
 

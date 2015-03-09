@@ -40,18 +40,25 @@ NSInteger dialogsBatch = 20;
     
     self.tableView.backgroundColor = [UIColor whiteColor];
     
-    [self getDialogsFromServer];
-    
     self.tableView.infiniteScrollIndicatorStyle = UIActivityIndicatorViewStyleGray;
     __weak RJDialogsViewController *weakSelf = self;
     [self.tableView addInfiniteScrollWithHandler:^(UIScrollView *scrollView) {
         [weakSelf getDialogsFromServer];
         [scrollView finishInfiniteScroll];
     }];
+    
+    UIRefreshControl *refresh = [UIRefreshControl new];
+    [refresh addTarget:self action:@selector(actionRefreshWall) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = refresh;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self actionRefreshWall];
 }
 
 #pragma mark - API
@@ -202,6 +209,35 @@ NSInteger dialogsBatch = 20;
     vc.user = user;
     vc.userImage = cell.friendsImageView.image;
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+#pragma mark - Actions
+
+- (void)actionRefreshWall {
+    [[RJServerManager sharedManager]
+     getDialogsWithCount:MAX(dialogsBatch, [self.dialogsArray count])
+     andOffset:0
+     onSuccess:^(NSArray *dialogs) {
+        [[self mutableArrayValueForKey:@"dialogsArray"] removeAllObjects];
+        for (NSDictionary *dialogDict in dialogs) {
+            RJDialog *dialog = [[RJDialog alloc] initWithDictionary:dialogDict];
+            [[self mutableArrayValueForKey:@"dialogsArray"] addObject:dialog];
+        }
+        [[self mutableArrayValueForKey:@"userIDsArray"] removeAllObjects];
+        [[self mutableArrayValueForKey:@"userIDsArray"] addObjectsFromArray:[self.dialogsArray valueForKeyPath:@"@unionOfObjects.userID"]];
+        
+        [[self mutableArrayValueForKey:@"usersArray"] removeAllObjects];
+        [[RJServerManager sharedManager] getUser:self.userIDsArray
+                                       onSuccess:^(NSArray *users) {
+                                           [[self mutableArrayValueForKey:@"usersArray"] addObjectsFromArray:users];
+                                           [self.tableView reloadData];
+                                           [self.refreshControl endRefreshing];
+                                       } onFailure:^(NSError *error, NSInteger statusCode) {
+                                           NSLog(@"Error = %@, code = %ld", [error localizedDescription], statusCode);
+                                       }];
+    } onFailure:^(NSError *error, NSInteger statusCode) {
+        NSLog(@"Error = %@, code = %ld", [error localizedDescription], statusCode);
+    }];
 }
 
 #pragma mark - Methods

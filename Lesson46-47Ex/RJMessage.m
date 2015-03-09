@@ -17,8 +17,13 @@
         self.text = [dictionary valueForKeyPath:@"body"];
         self.messageIsMine = [[dictionary valueForKeyPath:@"out"] boolValue];
         self.messageState = [[dictionary valueForKeyPath:@"read_state"] integerValue];
+        self.messageID = [[dictionary valueForKeyPath:@"id"] integerValue];
     }
     return self;
+}
+
+- (NSString *)description {
+    return [NSString stringWithFormat:@"MESSAGE: \ndate: %@", [NSDate dateWithTimeIntervalSince1970:self.messageInterval]];
 }
 
 @end

@@ -13,4 +13,5 @@
 @interface RJMessageCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet RJMessageLabel *messageTextLabel;
+@property (weak, nonatomic) IBOutlet UIView *messageView;
 @end

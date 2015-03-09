@@ -12,9 +12,13 @@
 
 @interface RJChatViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UITextView *textView;
+@property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UIButton *userButton;
+@property (weak, nonatomic) IBOutlet UIButton *sendMessageButton;
 
 @property (strong, nonatomic) UIImage *userImage;
 @property (strong, nonatomic) RJUser *user;
+
+- (IBAction)actionTextFieldDidChange:(UITextField *)sender;
+- (IBAction)actionSendButtonPushed:(UIButton *)sender;
 @end

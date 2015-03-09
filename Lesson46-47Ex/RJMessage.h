@@ -18,6 +18,7 @@ typedef NS_ENUM(NSInteger, RJMessageState) {
 @property (strong, nonatomic) NSString *text;
 @property (assign, nonatomic) BOOL messageIsMine;
 @property (assign, nonatomic) RJMessageState messageState;
+@property (assign, nonatomic) NSInteger messageID;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 @end
