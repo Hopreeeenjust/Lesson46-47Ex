@@ -139,7 +139,7 @@
                onFailure:(void(^)(NSError *error, NSInteger statusCode))failure {
     NSDictionary *parameters = @{
                                  @"user_ids": @(friendId),
-                                 @"fields": @[@"photo_100", @"bdate", @"city", @"country", @"photo_max", @"online", @"online_mobile", @"last_seen", @"counters", @"can_post", @"can_write_private_message", @"sex"],
+                                 @"fields": @[@"photo_100", @"bdate", @"city", @"country", @"photo_max", @"online", @"online_mobile", @"last_seen", @"counters", @"can_post", @"can_write_private_message", @"sex", @"status"],
                                  @"name_case": @"nom",
                                  @"lang": @"ru",
                                  @"access_token": self.accessToken.token,

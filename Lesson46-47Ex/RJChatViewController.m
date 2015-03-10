@@ -21,6 +21,8 @@
 @property (strong, nonatomic) NSArray *messageSectionsArray;
 @property (strong, nonatomic) RJMessageSection *messageSection;
 @property (strong, nonatomic) NSArray *unreadMessages;
+@property (assign, nonatomic) BOOL firstLoad;
+@property (strong, nonatomic) UIRefreshControl *refresh;
 @end
 
 NSInteger messagesBatch = 70;
@@ -31,6 +33,8 @@ NSInteger messagesBatch = 70;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+        
+    self.firstLoad = YES;
     
     self.unreadMessages = [NSArray new];
     
@@ -54,6 +58,7 @@ NSInteger messagesBatch = 70;
     UIRefreshControl *refresh = [UIRefreshControl new];
     [refresh addTarget:self action:@selector(actionGetMoreMessages) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:refresh];
+    self.refresh = refresh;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(actionKeyboardWillShow:)
@@ -87,7 +92,6 @@ NSInteger messagesBatch = 70;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-//
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -99,40 +103,7 @@ NSInteger messagesBatch = 70;
 }
 
 - (RJMessageCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *inboxIdentifier = @"Inbox";
-    static NSString *outboxIdentifier = @"Outbox";
-    
-    NSString *identifier;
-    
-    RJMessage *message = [[[self.messageSectionsArray objectAtIndex:indexPath.section] messages] objectAtIndex:indexPath.row];
-    
-    if (message.messageIsMine) {
-        identifier = outboxIdentifier;
-    } else {
-        identifier = inboxIdentifier;
-    }
-    
-    RJMessageCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-
-    cell.messageView.layer.cornerRadius = 10.f;
-    cell.messageView.clipsToBounds = YES;
-    if ([message.text isEqualToString:@""]) {
-        cell.messageTextLabel.text = @" ";
-    } else {
-        cell.messageTextLabel.text = message.text;
-    }
-    cell.messageTextLabel.numberOfLines = 0;
-    cell.messageTextLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    
-    cell.timeLabel.text = [self stringTimeFromTimeInterval:message.messageInterval];
-    
-    if (message.messageState == RJMessageStateUnread) {
-        cell.backgroundColor = [UIColor colorWithRed:151/255.0 green:200/255.0 blue:255/255.0 alpha:0.4];
-    } else {
-        cell.backgroundColor = [UIColor clearColor];
-    }
-    
-    return cell;
+    return [self configureBasicCellAtIndexPath:indexPath];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -185,6 +156,18 @@ NSInteger messagesBatch = 70;
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 0;
 }
+    
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    RJMessageCell *cell = [self configureBasicCellAtIndexPath:indexPath];
+
+    [cell setNeedsLayout];
+    [cell layoutIfNeeded];
+    CGSize maximumSize = CGSizeMake(320.0, UILayoutFittingCompressedSize.height);
+    CGFloat height = [cell.contentView systemLayoutSizeFittingSize:maximumSize].height;
+    return height;
+}
+
 
 #pragma mark - Actions
 
@@ -270,7 +253,6 @@ NSInteger messagesBatch = 70;
              [self goToBottom];
          }
          self.textField.text = @"";
-         [self.textField resignFirstResponder];
      }
      onFailure:^(NSError *error, NSInteger statusCode) {
          NSLog(@"Error = %@, code = %ld", [error localizedDescription], statusCode);
@@ -290,7 +272,7 @@ NSInteger messagesBatch = 70;
          }
          [[self mutableArrayValueForKey:@"messageSectionsArray"] removeAllObjects];
          self.messageSectionsArray = [self dateSectionsArrayForMessages];
-         [self markMessagesAsRead];
+         [self findAndMarkMessagesAsRead];
          [self.tableView reloadData];
          [self goToBottom];
      }
@@ -362,11 +344,15 @@ NSInteger messagesBatch = 70;
          self.messageSectionsArray = [self dateSectionsArrayForMessages];
          [self.tableView reloadData];
          [self goToBottom];
-         [view stopAnimating];
-         self.unreadMessages = [self unreadMessagesArrayFromMessagesInArray:self.messagesArray];
-         if ([self.unreadMessages count] > 0) {
-             [self markMessagesAsRead];
+         if (self.firstLoad) {
+             self.firstLoad = NO;
          }
+         [view stopAnimating];
+         if ([self.refresh isRefreshing]) {
+             [self.refresh endRefreshing];
+
+         }
+         [self findAndMarkMessagesAsRead];
      }
      onFailure:^(NSError *error, NSInteger statusCode) {
          NSLog(@"Error = %@, code = %ld", [error localizedDescription], statusCode);
@@ -374,7 +360,6 @@ NSInteger messagesBatch = 70;
 }
 
 - (void)markMessagesAsRead {
-    [[self mutableArrayValueForKey:@"unreadMessages"] removeAllObjects];
     [[RJServerManager sharedManager]
      markAllMessagesAsRead:[self unreadMessageIDsStringFromArray:self.unreadMessages]
      onSuccess:^(id result) {
@@ -440,9 +425,15 @@ NSInteger messagesBatch = 70;
 }
 
 - (NSIndexPath *)lastIndexPath {
-    NSInteger lastSectionIndex = MAX(0, [self.tableView numberOfSections] - 1);
-    NSInteger lastRowIndex = MAX(0, [self.tableView numberOfRowsInSection:lastSectionIndex] - 1);
-    return [NSIndexPath indexPathForRow:lastRowIndex inSection:lastSectionIndex];
+    if (self.firstLoad) {
+        NSInteger lastSectionIndex = MAX(0, [self.tableView numberOfSections] - 1);
+        NSInteger lastRowIndex = MAX(0, [self.tableView numberOfRowsInSection:lastSectionIndex] - 1);
+        return [NSIndexPath indexPathForRow:lastRowIndex inSection:lastSectionIndex];
+    } else {
+        NSArray *array = [self.tableView indexPathsForVisibleRows];
+        NSIndexPath *lastVisiblePath = [array lastObject];
+        return lastVisiblePath;
+    }
 }
 
 - (NSArray *)dateSectionsArrayForMessages {
@@ -496,5 +487,48 @@ NSInteger messagesBatch = 70;
     return resultString;
 }
 
+- (RJMessageCell *)configureBasicCellAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *inboxIdentifier = @"Inbox";
+    static NSString *outboxIdentifier = @"Outbox";
+    
+    NSString *identifier;
+    
+    RJMessage *message = [[[self.messageSectionsArray objectAtIndex:indexPath.section] messages] objectAtIndex:indexPath.row];
+    
+    if (message.messageIsMine) {
+        identifier = outboxIdentifier;
+    } else {
+        identifier = inboxIdentifier;
+    }
+    
+    RJMessageCell *cell = [self.tableView dequeueReusableCellWithIdentifier:identifier];
+    
+    cell.messageView.layer.cornerRadius = 10.f;
+    cell.messageView.clipsToBounds = YES;
+    if ([message.text isEqualToString:@""]) {
+        cell.messageTextLabel.text = @" ";
+    } else {
+        cell.messageTextLabel.text = message.text;
+    }
+    cell.messageTextLabel.numberOfLines = 0;
+    cell.messageTextLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    
+    cell.timeLabel.text = [self stringTimeFromTimeInterval:message.messageInterval];
+    
+    if (message.messageState == RJMessageStateUnread) {
+        cell.backgroundColor = [UIColor colorWithRed:151/255.0 green:200/255.0 blue:255/255.0 alpha:0.4];
+    } else {
+        cell.backgroundColor = [UIColor clearColor];
+    }
+    
+    return cell;
+}
 
+- (void)findAndMarkMessagesAsRead {
+    [[self mutableArrayValueForKey:@"unreadMessages"] removeAllObjects];
+    self.unreadMessages = [self unreadMessagesArrayFromMessagesInArray:self.messagesArray];
+    if ([self.unreadMessages count] > 0) {
+        [self markMessagesAsRead];
+    }
+}
 @end

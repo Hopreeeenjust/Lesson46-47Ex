@@ -22,6 +22,8 @@
 #import "RJFirstCell.h"
 #import "RJWritePostController.h"
 #import "RJDialogsViewController.h"
+#import "RJUserDetailInfoController.h"
+#import "RJChatViewController.h"
 
 @interface RJUserProfileController () <UITableViewDataSource>
 @property (strong, nonatomic) RJUser *postOwner;
@@ -128,21 +130,23 @@ static BOOL firstTimeAppear = YES;
              self.sendMessageButton.alpha = 1.f;
          }
          [self.photoImageView setImageWithURL:[NSURL URLWithString:user.originalImageUrl]];
-         self.nameLabel.text = [NSString stringWithFormat:@"%@ %@", user.firstName, user.lastName];
-         self.cityLabel.text = [self showCityAndCountry];
+         if (user) {
+             self.nameLabel.text = [NSString stringWithFormat:@"%@ %@", user.firstName, user.lastName];
+             self.cityLabel.text = [self showCityAndCountry];
+         }
          if (user.online) {
              if (user.onlineMobile) {
-                 self.statusLabel.text = @"Online (моб.)";
+                 self.onlineStatusLabel.text = @"Online (моб.)";
              } else {
-                 self.statusLabel.text = @"Online";
+                 self.onlineStatusLabel.text = @"Online";
              }
          } else {
-             self.statusLabel.text = [self statusText];
+             self.onlineStatusLabel.text = [self statusText];
          }
          if (user.birthDate.length > 5) {    //we got full date of birth
              self.ageLabel.text = [self showAge];
          }
-         UIView *view = [self.statusLabel superview];
+         UIView *view = [self.onlineStatusLabel superview];
          [self setTitleForButton:self.showFriendsButton];
          [view reloadInputViews];
      }
@@ -207,18 +211,6 @@ static BOOL firstTimeAppear = YES;
     [self presentViewController:nav animated:YES completion:nil];
 }
 
-- (IBAction)actionShowUserFollowers:(UIButton *)sender {
-    RJFollowersViewController *vc = [[RJFollowersViewController alloc] initWithStyle:UITableViewStylePlain];
-    vc.userID = self.user.userID;
-    [self.navigationController pushViewController:vc animated:YES];
-}
-
-- (IBAction)actionShowUserGroups:(UIButton *)sender {
-    RJGroupsViewController *vc = [[RJGroupsViewController alloc] initWithStyle:UITableViewStylePlain];
-    vc.userID = self.user.userID;
-    [self.navigationController pushViewController:vc animated:YES];
-}
-
 - (IBAction)actionShowUserFriends:(UIButton *)sender {
     RJFriendsViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"RJFriendsViewController"];
     vc.userID = self.user.userID;
@@ -229,7 +221,28 @@ static BOOL firstTimeAppear = YES;
     if (self.user && self.user.userID == [[[RJServerManager sharedManager] loggedUser] userID]) {
         RJDialogsViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"RJDialogsViewController"];
         [self.navigationController pushViewController:vc animated:YES];
+    } else {
+        RJChatViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"RJChatViewController"];
+        vc.user = self.user;
+        vc.userImage = [self.photoImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        [self.navigationController pushViewController:vc animated:YES];
     }
+}
+
+- (IBAction)actionGoToOwnersProfile:(UIBarButtonItem *)sender {
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+- (IBAction)actionShowDetailInfo:(UIButton *)sender {
+    RJUserDetailInfoController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"RJUserDetailInfoController"];
+    vc.image = self.photoImageView.image;
+    vc.onlineSstatus = self.onlineStatusLabel.text;
+    vc.name = self.nameLabel.text;
+    vc.city = self.cityLabel.text;
+    vc.age = self.ageLabel.text;
+    vc.user = self.user;
+    vc.navigationItem.title = self.user.firstName;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - UITableViewDataSource
@@ -401,14 +414,6 @@ static BOOL firstTimeAppear = YES;
 }
 
 #pragma mark - UITableViewDelegate
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 0 && self.user.canPost) {
-        return 44;
-    } else {
-        return 404;
-    }
-}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 20.f;

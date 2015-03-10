@@ -13,7 +13,7 @@
 @interface RJUserProfileController : UITableViewController
 @property (weak, nonatomic) IBOutlet UIImageView *photoImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+@property (weak, nonatomic) IBOutlet UILabel *onlineStatusLabel;
 @property (weak, nonatomic) IBOutlet UILabel *ageLabel;
 @property (weak, nonatomic) IBOutlet UILabel *cityLabel;
 @property (weak, nonatomic) IBOutlet UIButton *sendMessageButton;
@@ -22,7 +22,7 @@
 @property (strong, nonatomic) RJUser *user;
 @property (assign, nonatomic) BOOL needUpdateAfterPosting;
 
-- (IBAction)actionShowUserFollowers:(UIButton *)sender;
 - (IBAction)actionShowUserFriends:(UIButton *)sender;
-- (IBAction)actionShowUserGroups:(UIButton *)sender;
+- (IBAction)actionGoToOwnersProfile:(UIBarButtonItem *)sender;
+- (IBAction)actionShowDetailInfo:(UIButton *)sender;
 @end

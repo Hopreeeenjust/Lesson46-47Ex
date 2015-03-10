@@ -207,7 +207,7 @@ NSInteger dialogsBatch = 20;
     RJDialogsCell *cell = (RJDialogsCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     RJChatViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"RJChatViewController"];
     vc.user = user;
-    vc.userImage = cell.friendsImageView.image;
+    vc.userImage = [cell.friendsImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

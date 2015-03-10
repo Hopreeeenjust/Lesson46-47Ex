@@ -31,6 +31,7 @@ typedef NS_ENUM(NSInteger, RJUserGender) {
 @property (assign, nonatomic) BOOL canPost;
 @property (assign, nonatomic) BOOL canSendMessage;
 @property (assign, nonatomic) RJUserGender gender;
+@property (strong, nonatomic) NSString *status;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 @end

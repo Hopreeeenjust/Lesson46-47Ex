@@ -16,6 +16,7 @@
 
 @interface RJFollowersViewController () <UITableViewDataSource>
 @property (strong, nonatomic) NSArray *followersArray;
+@property (strong, nonatomic) UIImageView *onlineStatusImageView;
 @end
 
 @implementation RJFollowersViewController
@@ -26,8 +27,10 @@ NSInteger followersBatch = 20;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"Followers";
+    self.navigationItem.title = @"Последователи";
     self.followersArray = [NSArray new];
+    
+    self.onlineStatusImageView = [UIImageView new];
     
     [self getFollowersFromServer];
     
@@ -76,16 +79,13 @@ NSInteger followersBatch = 20;
     if (!cell) {
         cell = [[RJFriendListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
-    cell.onlineStatusImageView = [UIImageView new];
-    [cell addSubview:cell.onlineStatusImageView];
-    cell.onlineStatusImageView.frame = CGRectMake(324, 0, 44, 44);
     NSDictionary *friendInfo = [self.followersArray objectAtIndex:indexPath.row];
     RJUser *friend = [[RJUser alloc] initWithDictionary:friendInfo];
     cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", friend.firstName, friend.lastName];
     NSURL *imageURL = [NSURL URLWithString:friend.imageUrl];
     NSURLRequest *request = [NSURLRequest requestWithURL:imageURL];
     cell.imageView.image = nil;
-    cell.onlineStatusImageView.image = nil;
+    cell.onlineImageView.image = nil;
     cell.imageView.layer.cornerRadius = 21.75f;
     cell.imageView.clipsToBounds = YES;
     __weak RJFriendListCell *weakCell = cell;
@@ -94,9 +94,9 @@ NSInteger followersBatch = 20;
                                    success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
                                        weakCell.imageView.image = image;
                                        if (friend.online && friend.onlineMobile) {
-                                           weakCell.onlineStatusImageView.image = [UIImage imageNamed:@"online_mobile_small"];
+                                           weakCell.onlineImageView.image = [UIImage imageNamed:@"online_mobile_small"];
                                        } else if (friend.online) {
-                                           weakCell.onlineStatusImageView.image = [UIImage imageNamed:@"online"];
+                                           weakCell.onlineImageView.image = [UIImage imageNamed:@"online"];
                                        }
                                        [weakCell layoutSubviews];
                                    }

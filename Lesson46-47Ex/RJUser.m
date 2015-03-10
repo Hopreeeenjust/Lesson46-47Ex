@@ -30,6 +30,7 @@
         self.canPost = [[dictionary valueForKey:@"can_post"] boolValue];
         self.canSendMessage = [[dictionary valueForKey:@"can_write_private_message"] boolValue];
         self.gender = [[dictionary valueForKey:@"sex"] integerValue];
+        self.status = [dictionary valueForKey:@"status"];
     }
     return self;
 }

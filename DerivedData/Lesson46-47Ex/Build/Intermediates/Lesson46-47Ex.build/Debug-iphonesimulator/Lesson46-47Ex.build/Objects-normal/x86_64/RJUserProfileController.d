@@ -15,4 +15,6 @@ dependencies: \
   /Users/roma/Documents/iOS\ dev\ course/Lesson46-47Ex/RJAccessToken.h \
   /Users/roma/Documents/iOS\ dev\ course/Lesson46-47Ex/Lesson46-47Ex/RJFirstCell.h \
   /Users/roma/Documents/iOS\ dev\ course/Lesson46-47Ex/Lesson46-47Ex/RJWritePostController.h \
-  /Users/roma/Documents/iOS\ dev\ course/Lesson46-47Ex/Lesson46-47Ex/RJDialogsViewController.h
+  /Users/roma/Documents/iOS\ dev\ course/Lesson46-47Ex/Lesson46-47Ex/RJDialogsViewController.h \
+  /Users/roma/Documents/iOS\ dev\ course/Lesson46-47Ex/Lesson46-47Ex/RJUserDetailInfoController.h \
+  /Users/roma/Documents/iOS\ dev\ course/Lesson46-47Ex/Lesson46-47Ex/RJChatViewController.h

@@ -16,6 +16,7 @@
 		E01CE0571A9FD0A900A9F5E1 /* online_mobile_small@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = E01CE0561A9FD0A900A9F5E1 /* online_mobile_small@2X.png */; };
 		E048538C1AAB471000094CA7 /* RJMessageLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = E048538B1AAB471000094CA7 /* RJMessageLabel.m */; };
 		E04853901AAB833800094CA7 /* RJMessageSection.m in Sources */ = {isa = PBXBuildFile; fileRef = E048538F1AAB833800094CA7 /* RJMessageSection.m */; };
+		E05EA1221AAED376004B6142 /* RJUserDetailInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = E05EA1211AAED376004B6142 /* RJUserDetailInfoController.m */; };
 		E0753B741A9DD35800EE79B5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E0753B731A9DD35800EE79B5 /* main.m */; };
 		E0753B771A9DD35800EE79B5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E0753B761A9DD35800EE79B5 /* AppDelegate.m */; };
 		E0753B7A1A9DD35800EE79B5 /* RJFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0753B791A9DD35800EE79B5 /* RJFriendsViewController.m */; };
@@ -87,6 +88,8 @@
 		E048538B1AAB471000094CA7 /* RJMessageLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RJMessageLabel.m; sourceTree = "<group>"; };
 		E048538E1AAB833800094CA7 /* RJMessageSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RJMessageSection.h; sourceTree = "<group>"; };
 		E048538F1AAB833800094CA7 /* RJMessageSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RJMessageSection.m; sourceTree = "<group>"; };
+		E05EA1201AAED376004B6142 /* RJUserDetailInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RJUserDetailInfoController.h; sourceTree = "<group>"; };
+		E05EA1211AAED376004B6142 /* RJUserDetailInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RJUserDetailInfoController.m; sourceTree = "<group>"; };
 		E0753B6E1A9DD35800EE79B5 /* Lesson46-47Ex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lesson46-47Ex.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0753B721A9DD35800EE79B5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E0753B731A9DD35800EE79B5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -418,6 +421,8 @@
 				E0EC8DB61AA0A01600C6FD26 /* RJGroupsViewController.m */,
 				E08548C71A9E29C20040DDEB /* RJUserProfileController.h */,
 				E08548C81A9E29C20040DDEB /* RJUserProfileController.m */,
+				E05EA1201AAED376004B6142 /* RJUserDetailInfoController.h */,
+				E05EA1211AAED376004B6142 /* RJUserDetailInfoController.m */,
 				E096C77B1AA5D30B00AAC0E0 /* RJLoginViewController.h */,
 				E096C77C1AA5D30B00AAC0E0 /* RJLoginViewController.m */,
 				E0D1351E1AA6F6EA001E3F79 /* RJWritePostController.h */,
@@ -536,6 +541,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E0753B7A1A9DD35800EE79B5 /* RJFriendsViewController.m in Sources */,
+				E05EA1221AAED376004B6142 /* RJUserDetailInfoController.m in Sources */,
 				E096C7701AA5C9EB00AAC0E0 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				E096C7751AA5C9EB00AAC0E0 /* UIRefreshControl+AFNetworking.m in Sources */,
 				E00DA6F81AA9ABEB003B2F90 /* RJMessageCell.m in Sources */,
